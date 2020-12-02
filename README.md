@@ -79,7 +79,7 @@ Let's fix that: add the following to ```logic/rules_bank.py```:
 You can paste these rules, or build them with an IDE such as PyCharm using code
 
 completion:
-<figure><img src="images/overview/building-rules.png" width="800"></figure>
+<figure><img src="images/building-rules.png" width="800"></figure>
 
 
 Registering Rules
