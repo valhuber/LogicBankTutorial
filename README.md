@@ -1,31 +1,24 @@
-Example: Graphene + SQLAlchemy + LogicBank
-==========================================
+Logic Bank Tutorial
+===================
 
-This example project demos integration between:
+This project explores the shortest possible example of multi-table
+logic, to illustrate the use of [LogicBank](https://github.com/valhuber/LogicBank):
 
-* [Graphene-SQLAlchemy](https://github.com/graphql-python/graphene-sqlalchemy)
-and 
-* [LogicBank](https://github.com/valhuber/LogicBank)
+* Add an Order to a Customer
+* Rules declared to
+   * Adjust the Customer Balance, and
+   * Verify the Balance <= 2000
 
-It is an adaption of [this example](https://github.com/graphql-python/graphene-sqlalchemy/tree/master/examples/flask_sqlalchemy).
-
-See the [LogicBank Wiki](https://github.com/valhuber/LogicBank/wiki/Sample-Project---Allocation) for an overview of the ```payment_allocation``` application.
 
 Background
 ----------
-**GraphQL** (as I understand it) moves API definition from 
-the server team (company, or org in company) to the consumers,
-who clearly better understand their requirements.  Clear
-specifications can reduce traffic, in either size and or
-number of messages.  The focus is on **efficient retrieval.**
-
 **Logic Base** can reduce update logic coding (a signficant
 part of any database app) by 40X, by using
 spreadsheet-like rules plus Python for extensibility.  The
 focus is on **update agility.**
 
-Both are based on SQLAlchemy.  This project explores using
-Graphene for retrieval, and Logic Base for mutation logic.
+Logic Bank is based on SQLAlchemy - it handles `before_flush` events
+to enforece your rules.
 
 Getting started
 ---------------
@@ -35,7 +28,7 @@ whole Graphene-SQLAlchemy repository:
 
 ```bash
 # Get the example project code
-git clone https://github.com/valhuber/payment_allocation_graphene.git
+git clone https://github.com/valhuber/LogicBankTutorial.git
 ```
 
 It is good idea (but not required) to create a virtual environment
@@ -48,7 +41,7 @@ to be useful:
 
 ```bash
 # Create a virtualenv in which we can install the dependencies
-cd payment_allocation_graphene
+cd LogicBankTutorial
 virtualenv venv
 source venv/bin/activate
 ```
@@ -59,61 +52,85 @@ Now we can install our dependencies:
 pip install -r requirements.txt
 ```
 
-Verify LogicBank
-----------------
-
+Verify Installation
+-------------------
+Verify that the following runs, but fails:
 ```bash
-cd payment_allocation/tests
-python add_payment.py
+cd LogicBankTutorial/tests
+python add_order.py
 ```
 
-Explore Graphene
-----------------
-***WIP*** - not running
+It failed our assert that the balance increased, because there are no rules.
 
-Now the following command will setup the database, and start the server:
+Adding Rules
+------------
 
-```bash
-chmod +x app.py
-./app.py
-```
+Let's fix that: add the following to ```logic/rules_bank.py```:
 
+```python
 
-Now head on over to
-[http://127.0.0.1:5000/graphql](http://127.0.0.1:5000/graphql)
-and run some queries; samples below.
+    Rule.constraint(validate=Customer,
+                    error_msg="balance ({row.Balance}) exceeds 2000)",
+                    as_condition=lambda row: row.Balance <= 2000)
 
-This fails with ```Request' object has no attribute 'get'```
-
-Mentioned in this [stack overflow](https://github.com/graphql-python/graphene-sqlalchemy/issues/130),
-which links to [this](https://github.com/graphql-python/graphene-sqlalchemy/issues/286)
+    Rule.sum(derive=Customer.Balance, as_sum_of=Order.AmountOwed)
 
 ```
-{
-  allCustomers(sort: [ID_ASC]) {
-    edges {
-      node {
-        Id
-        Balance
-      }
-    }
-  }
-}
+You can paste these rules, or build them with an IDE such as PyCharm using code
+
+completion:
+<figure><img src="images/overview/building-rules.png" width="800"></figure>
+
+
+Registering Rules
+-----------------
+The ```logic/__init__``` file contains the code
+that opens the database and registers the rules,
+near the end:
+
+```python
+
+conn_string = "sqlite:///" + db_loc
+engine = sqlalchemy.create_engine(conn_string, echo=False)  # sqlalchemy sqls...
+
+session_maker = sqlalchemy.orm.sessionmaker()
+session_maker.configure(bind=engine)
+session = session_maker()
+
+rule_list = None
+db = None
+LogicBank.activate(session=session, activator=declare_logic)
+
+print("\n" + prt("END - connected, session created, listeners registered\n"))
 ```
 
+Rule Execution - Sum
+--------------------
+You don't invoke the rules directly; the Logic Base
+Rule Engine handles `before_flush` events
+to **watch** for changes to referenced attributes, 
+and react by running the referencing rules.
+
+You can re-run the test, which shoud npow succeed.
+
+> Here, the insertion of an Order with ```AmountOwed``` triggers the
+> ```Customer.Balance``` rule.
+
+Rule Execution - Constraint
+---------------------------
+
+Find this line, and change the 500 to 1000:
+
+```python
+amount_total = 500  # 500 should work; change to 1000 to see constraint fire
 ```
-{
-  allCustomers {
-    edges {
-      node {
-        Id
-        Balance
-        OrderList {
-          CustomerID
-          AmountTotal
-        }
-      }
-    }
-  }
-}
-```
+
+Re-run the test; should now fail with a constraint exception.
+
+
+Rule Reuse
+----------
+
+Note rules are not tied to a specific verb, but rather to the data.  So,
+our ```sum``` rule will also ***react*** if you delete an order, or
+update an order with the ```AmountOwed``` changed.
