@@ -77,8 +77,8 @@ Let's fix that: add the following to ```logic/rules_bank.py```:
 
 ```
 You can paste these rules, or build them with an IDE such as PyCharm using code
-
 completion:
+
 <figure><img src="images/building-rules.png" width="800"></figure>
 
 
@@ -104,6 +104,9 @@ LogicBank.activate(session=session, activator=declare_logic)
 print("\n" + prt("END - connected, session created, listeners registered\n"))
 ```
 
+Note rules are based on your data model.  **Important considerations apply,**
+as described in the [Logic Bank Wiki](https://github.com/valhuber/LogicBank/wiki/Managing-Rules).
+
 Rule Execution - Sum
 --------------------
 You don't invoke the rules directly; the Logic Base
@@ -118,6 +121,7 @@ You can re-run the test, which should now succeed.
 
 Note the logic, which shows all the rules that fire:
 
+<figure><img src="images/logic-execution.png" width="800"></figure>
 
 Rule Execution - Constraint
 ---------------------------
@@ -145,3 +149,12 @@ Rule Chaining
 This completes our simple example.  You will typically have more rules that
 fire on a transaction.  You can explore a more typical set of rules in
 the Logic Bank examples.
+
+Extensibility
+-------------
+
+In this example, our logic was strictly spreadsheet-like rules.  You will
+typically need to extend rules with Python code, as illustrated in the
+Logic Bank examples.
+
+Just as with regular Python, you can set breakpoints, perform logging, etc.
