@@ -12,13 +12,18 @@ logic, to illustrate the use of [LogicBank](https://github.com/valhuber/LogicBan
 
 Background
 ----------
-**Logic Base** can reduce update logic coding (a signficant
-part of any database app) by 40X, by using
-spreadsheet-like rules plus Python for extensibility.  The
-focus is on **update agility.**
+Use Logic Bank to govern SQLAlchemy
+update transaction logic - multi-table derivations, constraints,
+and actions such as sending mail or messages. Logic consists of _both:_
+
+* **Rules - 40X** more concise
+using a spreadsheet-like paradigm, and
+
+* **Python - control and extensibility,**
+using standard tools and techniques
 
 Logic Bank is based on SQLAlchemy - it handles `before_flush` events
-to enforece your rules.
+to enforce your logic.
 
 Getting started
 ---------------
@@ -82,8 +87,8 @@ completion:
 <figure><img src="images/building-rules.png" width="800"></figure>
 
 
-Registering Rules
------------------
+Declaring Rules
+---------------
 The ```logic/__init__``` file contains the code
 that opens the database and registers the rules,
 near the end:
@@ -111,15 +116,18 @@ Rule Execution - Sum
 --------------------
 You don't invoke the rules directly; the Logic Base
 Rule Engine handles `before_flush` events
-to **watch** for changes to referenced attributes, 
-and react by running the referencing rules.
+to
+
+* **watch** for changes to referenced attributes
+* **react** by running the referencing rules
+* changes can **chain** to other rules.
 
 You can re-run the test, which should now succeed.
 
 > Here, the insertion of an Order with ```AmountOwed``` triggers the
 > ```Customer.Balance``` rule.
 
-Note the logic, which shows all the rules that fire:
+Note the log, which shows all the rules that fire:
 
 <figure><img src="images/logic-execution.png" width="800"></figure>
 
@@ -149,6 +157,7 @@ Rule Chaining
 This completes our simple example.  You will typically have more rules that
 fire on a transaction.  You can explore a more typical set of rules in
 the Logic Bank examples.
+
 
 Extensibility
 -------------
