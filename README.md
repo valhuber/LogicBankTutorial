@@ -111,10 +111,13 @@ Rule Engine handles `before_flush` events
 to **watch** for changes to referenced attributes, 
 and react by running the referencing rules.
 
-You can re-run the test, which shoud npow succeed.
+You can re-run the test, which should now succeed.
 
 > Here, the insertion of an Order with ```AmountOwed``` triggers the
 > ```Customer.Balance``` rule.
+
+Note the logic, which shows all the rules that fire:
+
 
 Rule Execution - Constraint
 ---------------------------
@@ -134,3 +137,11 @@ Rule Reuse
 Note rules are not tied to a specific verb, but rather to the data.  So,
 our ```sum``` rule will also ***react*** if you delete an order, or
 update an order with the ```AmountOwed``` changed.
+
+
+Rule Chaining
+-------------
+
+This completes our simple example.  You will typically have more rules that
+fire on a transaction.  You can explore a more typical set of rules in
+the Logic Bank examples.

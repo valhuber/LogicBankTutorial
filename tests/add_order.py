@@ -46,7 +46,7 @@ cust_alfki = session.query(models.Customer).filter(models.Customer.Id == "ALFKI"
 
 amount_total = 500  # 500 should work; change to 1000 to see constraint fire
 
-new_order = models.Order(AmountOwed=amount_total, AmountPaid=0, AmountTotal=amount_total)
+new_order = models.Order(AmountTotal=amount_total)
 cust_alfki.OrderList.append(new_order)
 
 session.add(new_order)

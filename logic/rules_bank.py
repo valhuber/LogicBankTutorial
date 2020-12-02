@@ -10,3 +10,4 @@ def declare_logic():
     """
 
     # rules go here.
+
