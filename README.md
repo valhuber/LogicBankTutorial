@@ -73,7 +73,7 @@ Let's fix that: add the following to ```logic/rules_bank.py```:
                     error_msg="balance ({row.Balance}) exceeds 2000)",
                     as_condition=lambda row: row.Balance <= 2000)
 
-    Rule.sum(derive=Customer.Balance, as_sum_of=Order.AmountOwed)
+    Rule.sum(derive=Customer.Balance, as_sum_of=Order.AmountTotal)
 
 ```
 You can paste these rules, or build them with an IDE such as PyCharm using code

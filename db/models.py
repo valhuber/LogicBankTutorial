@@ -78,8 +78,6 @@ class Order(Base):
     CustomerId = Column(ForeignKey('Customer.Id'))
     OrderDate = Column(String(8000))
     AmountTotal = Column(DECIMAL(10, 2))
-    AmountPaid = Column(DECIMAL(10, 2))
-    AmountOwed = Column(DECIMAL(10, 2))
 
     AllocationList = relationship("PaymentAllocation",
                                    backref="Order",
