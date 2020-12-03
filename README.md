@@ -42,10 +42,8 @@ to keep things simple:
 ```bash
 # Create a virtualenv in which we can install the dependencies
 cd LogicBankTutorial
-# windows: python -m venv venv
-virtualenv venv
-# For windows: .\venv\Scripts\activate
-source venv/bin/activate
+virtualenv venv           # windows: python -m venv venv
+source venv/bin/activate  # For windows: .\venv\Scripts\activate
 ```
 
 Now we can install our dependencies:
