@@ -43,7 +43,7 @@ to keep things simple:
 # Create a virtualenv in which we can install the dependencies
 cd LogicBankTutorial
 virtualenv venv           # windows: python -m venv venv
-source venv/bin/activate  # For windows: .\venv\Scripts\activate
+source venv/bin/activate  # windows: .\venv\Scripts\activate
 ```
 
 Now we can install our dependencies:
