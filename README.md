@@ -40,8 +40,7 @@ for this project. We'll do this using
 to keep things simple:
 
 ```bash
-# Create a virtualenv in which we can install the dependencies
-cd LogicBankTutorial
+cd LogicBankTutorial.     # Create a virtualenv in which we can install the dependencies
 virtualenv venv           # windows: python -m venv venv
 source venv/bin/activate  # windows: .\venv\Scripts\activate
 ```
