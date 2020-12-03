@@ -28,21 +28,16 @@ to enforce your logic.
 Getting started
 ---------------
 
-First you'll need to get the source of the project. Do this by cloning the
-whole Graphene-SQLAlchemy repository:
+Begin by cloning this repository:
 
 ```bash
-# Get the example project code
 git clone https://github.com/valhuber/LogicBankTutorial.git
 ```
 
 It is good idea (but not required) to create a virtual environment
 for this project. We'll do this using
 [virtualenv](http://docs.python-guide.org/en/latest/dev/virtualenvs/)
-to keep things simple,
-but you may also find something like
-[virtualenvwrapper](https://virtualenvwrapper.readthedocs.org/en/latest/)
-to be useful:
+to keep things simple:
 
 ```bash
 # Create a virtualenv in which we can install the dependencies
@@ -61,14 +56,15 @@ Verify Installation
 -------------------
 Verify that the following runs, but fails:
 ```bash
-cd LogicBankTutorial/tests
+cd tests
 python add_order.py
 ```
 
-It failed our assert that the balance increased, because there are no rules.
+It failed our assert that the balance increased.
+This is expected, because there are no rules.
 
-Adding Rules
-------------
+Declaring Rules
+---------------
 
 Let's fix that: add the following to ```logic/rules_bank.py```:
 
@@ -87,8 +83,8 @@ completion:
 <figure><img src="images/building-rules.png" width="800"></figure>
 
 
-Declaring Rules
----------------
+Activating Rules
+----------------
 The ```logic/__init__``` file contains the code
 that opens the database and registers the rules,
 near the end:
@@ -102,8 +98,6 @@ session_maker = sqlalchemy.orm.sessionmaker()
 session_maker.configure(bind=engine)
 session = session_maker()
 
-rule_list = None
-db = None
 LogicBank.activate(session=session, activator=declare_logic)
 
 print("\n" + prt("END - connected, session created, listeners registered\n"))
@@ -120,7 +114,7 @@ to
 
 * **watch** for changes to referenced attributes
 * **react** by running the referencing rules
-* changes can **chain** to other rules.
+* changes can **chain** to other rules
 
 You can re-run the test, which should now succeed.
 
@@ -146,20 +140,22 @@ there is no change to the summed field, the qualification, or the foreign key.
 Rule Execution - Constraint
 ---------------------------
 
-Find this line, and change the 500 to 1000:
+Find this line in ```tests/add_order.py```, and change the 500 to 1000:
 
 ```python
 amount_total = 500  # 500 should work; change to 1000 to see constraint fire
 ```
 
-Re-run the test; should now fail with a constraint exception.
+Re-run the test; it should now fail with a constraint exception.
 
 
 Rule Reuse
 ----------
 
-Note rules are not tied to a specific verb, but rather to the data.  So,
-our ```sum``` rule will also ***react*** if you delete an order, or
+Note rules are not tied to a specific verb, but rather to the data.
+That means they apply to (are reused over) _all transactions._
+
+So, our ```sum``` rule will also ***react*** if you delete an order, or
 update an order with the ```AmountOwed``` changed.
 
 

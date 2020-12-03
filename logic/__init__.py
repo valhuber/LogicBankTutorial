@@ -49,8 +49,6 @@ session_maker = sqlalchemy.orm.sessionmaker()
 session_maker.configure(bind=engine)
 session = session_maker()
 
-rule_list = None
-db = None
 LogicBank.activate(session=session, activator=declare_logic)
 
 print("\n" + prt("END - connected, session created, listeners registered\n"))
