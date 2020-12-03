@@ -131,14 +131,14 @@ Note the log, which shows all the rules that fire:
 
 <figure><img src="images/logic-execution.png" width="800"></figure>
 
-==== Scalability
+#### Scalability
 Scalability depends on SQL tuning.  Logic Base addresses this with:
 
-* **Adjustments -** in the example above, observe the system added 500 to the 
-existing Balance with a 1 row (adjustment) update - ***not*** an expensive
+* __Adjustments -__ in the example above, observe the system added 500 to the 
+existing Balance with a 1 row (adjustment) update - __not__ an expensive
 ```Select sum``` query
 
-* *** Pruning - *** parent (Customer) updates are eliminated altogether if
+* __Pruning -__ parent (Customer) updates are eliminated altogether if
 there is no change to the summed field, the qualification, or the foreign key.
 
 
