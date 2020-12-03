@@ -132,7 +132,8 @@ Note the log, which shows all the rules that fire:
 <figure><img src="images/logic-execution.png" width="800"></figure>
 
 #### Scalability
-Scalability depends on SQL tuning.  Logic Base addresses this with:
+Scalability depends on SQL tuning.  Logic Base addresses this with
+techniques such as:
 
 * __Adjustments -__ in the example above, observe the system added 500 to the 
 existing Balance with a 1 row (adjustment) update - __not__ an expensive
