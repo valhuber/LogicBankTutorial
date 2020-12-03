@@ -117,7 +117,7 @@ to
 
 You can re-run the test, which should now succeed.
 
-> Here, the insertion of an Order with ```AmountOwed``` triggers the
+> Here, the insertion of an Order with ```AmountTotal``` triggers the
 > ```Customer.Balance``` rule.
 
 Note the log, which shows all the rules that fire:
