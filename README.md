@@ -42,7 +42,9 @@ to keep things simple:
 ```bash
 # Create a virtualenv in which we can install the dependencies
 cd LogicBankTutorial
+# windows: python -m venv venv
 virtualenv venv
+# For windows: .\venv\Scripts\activate
 source venv/bin/activate
 ```
 
