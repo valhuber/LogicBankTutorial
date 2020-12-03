@@ -155,7 +155,7 @@ Note rules are not tied to a specific verb, but rather to the data.
 That means they apply to (are reused over) _all transactions._
 
 So, our ```sum``` rule will also ***react*** if you delete an order, or
-update an order with the ```AmountOwed``` changed.
+update an order with the ```AmountTotal``` changed.
 
 
 Rule Chaining
