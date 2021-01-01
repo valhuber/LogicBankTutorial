@@ -157,13 +157,15 @@ That means they apply to (are reused over) _all transactions._
 So, our ```sum``` rule will also ***react*** if you delete an order, or
 update an order with the ```AmountTotal``` changed.
 
+This is because rules are 
+the [declarative, as described here](https://github.com/valhuber/LogicBank/wiki/Declarative).
 
 Rule Chaining
 -------------
 
 This completes our simple example.  You will typically have more rules that
 fire on a transaction.  You can explore a more typical set of rules in
-the Logic Bank examples.
+the [Logic Bank examples](https://github.com/valhuber/LogicBank/wiki/Examples).
 
 
 Extensibility
@@ -171,6 +173,6 @@ Extensibility
 
 In this example, our logic was strictly spreadsheet-like rules.  You will
 typically need to extend rules with Python code, as illustrated in the
-Logic Bank examples.
+[here](https://github.com/valhuber/LogicBank/wiki/Rule-Extensibility).
 
 Just as with regular Python, you can set breakpoints, perform logging, etc.
