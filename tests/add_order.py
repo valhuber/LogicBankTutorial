@@ -57,10 +57,10 @@ post_cust = session.query(models.Customer).filter(models.Customer.Id == "ALFKI")
 print("\nadd_order, update completed\n\n")
 
 logic_row = LogicRow(row=post_cust, old_row=pre_cust, ins_upd_dlt="*", nest_level=0, a_session=session, row_sets=None)
-if post_cust.Balance == pre_cust.Balance + amount_total:
-    logic_row.log("Correct adjusted Customer Result")
-    assert True
-else:
-    logic_row.log("ERROR - incorrect adjusted Customer Result")
-    assert False
+
+assert post_cust.Balance == pre_cust.Balance + amount_total,\
+    "ERROR - incorrect adjusted Customer Result (EXPECTED - now add rules)"
+
+logic_row.log("Correct adjusted Customer Result")
+
 print("\nadd_order, ran to completion\n\n")
