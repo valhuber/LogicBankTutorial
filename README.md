@@ -134,6 +134,8 @@ existing Balance with a 1 row (adjustment) update - __not__ an expensive
 
 * __Pruning -__ parent (Customer) updates are eliminated altogether if
 there is no change to the summed field, the qualification, or the foreign key.
+  
+You can explore [scalability, here](https://github.com/valhuber/LogicBank/wiki#scalability-automatic-pruning-and-optimization).
 
 
 Rule Execution - Constraint
