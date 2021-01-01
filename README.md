@@ -174,7 +174,7 @@ Extensibility
 -------------
 
 In this example, our logic was strictly spreadsheet-like rules.  You will
-typically need to extend rules with Python code, as illustrated in the
-[here](https://github.com/valhuber/LogicBank/wiki/Rule-Extensibility).
+typically need to extend rules with Python code, as illustrated in
+[extensibility, here](https://github.com/valhuber/LogicBank/wiki/Rule-Extensibility).
 
 Just as with regular Python, you can set breakpoints, perform logging, etc.
