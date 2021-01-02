@@ -1,3 +1,8 @@
+Superceded
+==========
+
+This Tutorial has been moved to examples in [LogicBank](https://github.com/valhuber/LogicBank).
+
 Logic Bank Tutorial
 ===================
 
